@@ -1,9 +1,10 @@
 use num_complex::Complex64;
 use array2d::Array2D;
+extern crate image;
 
 fn main() {
-    let set = bool_set(200,100,1000);
-    print_set(set);
+    let set = bool_set(200,200,1000);
+    draw_set(set);
 }
 
 #[allow(dead_code)]
@@ -35,6 +36,20 @@ fn print_set(set: Array2D<bool>) {
         }
         print!("\n");
     }
+}
+
+fn draw_set(set: Array2D<bool>) {
+    let imgx = set.column_len() as u32;
+    let imgy = set.row_len() as u32;
+    let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
+    for (x,y,pix) in imgbuf.enumerate_pixels_mut() {
+        let is_shaded = *set.get(y as usize, x as usize).unwrap();
+        if is_shaded {
+            *pix = image::Rgb([255 as u8,255 as u8,255 as u8]);
+        }
+    }
+
+    imgbuf.save("img.png").unwrap();
 }
 
 #[allow(dead_code)]
