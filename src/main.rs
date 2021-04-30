@@ -3,7 +3,7 @@ use array2d::Array2D;
 extern crate image;
 
 fn main() {
-    let set = bool_set(200,200,1000);
+    let set = bool_set(2000,2000,-1.78f64,0.01905f64,0.037f64,0.035f64,600);
     draw_set(set);
 }
 
@@ -39,8 +39,8 @@ fn print_set(set: Array2D<bool>) {
 }
 
 fn draw_set(set: Array2D<bool>) {
-    let imgx = set.column_len() as u32;
-    let imgy = set.row_len() as u32;
+    let imgy = set.column_len() as u32;
+    let imgx = set.row_len() as u32;
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
     for (x,y,pix) in imgbuf.enumerate_pixels_mut() {
         let is_shaded = *set.get(y as usize, x as usize).unwrap();
@@ -53,13 +53,13 @@ fn draw_set(set: Array2D<bool>) {
 }
 
 #[allow(dead_code)]
-fn bool_set(w: u32, h: u32, count: u32) -> Array2D<bool> {
+fn bool_set(w: u32, h: u32, start_x: f64, start_y: f64, box_width: f64, box_height: f64, count: u32) -> Array2D<bool> {
     let mut set = Array2D::filled_with(false, h as usize,w as usize);
-    let diff_x: f64 = 4f64 / w as f64;
-    let diff_y: f64 = 4f64 / h as f64;
+    let diff_x: f64 = box_width / w as f64;
+    let diff_y: f64 = box_height / h as f64;
     for i in 0..h {
         for j in 0..w {
-            let comp = Complex64::new(-2.0 + diff_x * j as f64,2.0 - diff_y * i as f64);
+            let comp = Complex64::new(start_x + diff_x * j as f64,start_y - diff_y * i as f64);
             if in_set(comp, count) {
                 let res = set.set(i as usize,j as usize,true);
             }
