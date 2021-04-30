@@ -3,7 +3,14 @@ use array2d::Array2D;
 extern crate image;
 
 fn main() {
-    let set = bool_set(2000,2000,-1.78f64,0.01905f64,0.037f64,0.035f64,600);
+    let height: u32 = 2000;
+    let width: u32 = 2000;
+    let start_x: f64 = -1.78;
+    let start_y: f64 = 0.01905;
+    let box_w: f64 = 0.037;
+    let box_h: f64 = box_w;
+    let iters: u32 = 200;
+    let set = bool_set(height,width,start_x,start_y,box_w,box_h,iters);
     draw_set(set);
 }
 
