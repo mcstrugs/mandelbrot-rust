@@ -190,6 +190,7 @@ dependencies = [
  "array2d",
  "image",
  "num-complex",
+ "rayon",
 ]
 
 [[package]]
